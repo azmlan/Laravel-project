@@ -23,6 +23,8 @@
     </div>
     <p class="mssg">{{ session('mssg') }}</p>
     <a href="{{route('pizzas.create')}}">{{ __('messages.new order') }}</a>
+    <br>
+    <a href="{{route('pizzas.index')}}">{{ __('messages.all orders') }}</a>
 </div>
 </div>
 @endsection

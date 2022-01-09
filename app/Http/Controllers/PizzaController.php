@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Models\Pizza;
 
+
+
+
 class PizzaController extends Controller
 {
   // this is auth for all of the controllers 
@@ -14,44 +17,59 @@ class PizzaController extends Controller
   // }
   public function index()
   {
-
     $JHpizza = Pizza::all();
-    //$JHpizza = Pizza::orderBy('type','desc')->get();
-    //$JHpizza = Pizza::where('name','mario')->get();
-    //$JHpizza = Pizza::latest()->get();
-
-
     return view('pizzas.index', ['pizzas' => $JHpizza]);
   }
-
   public function show($JHid)
   {
 
     $JHpizza = Pizza::FindOrFail($JHid);
     return view('pizzas.show', ['pizza' => $JHpizza]);
   }
-
   public function create()
   {
-
     return view('pizzas.create');
   }
 
-  public function store()
+  // Create Order With Ajax
+  public function store(Request $request)
   {
+    $order = Pizza::create([
 
-    $pizza = new Pizza();
-    $pizza->name = request('name');
-    $pizza->type = request('type');
-    $pizza->base = request('base');
-    $pizza->toppings = request('toppings');
+      'type' => $request->type,
+      'base' => $request->base,
+      'name' => $request->name,
+      'toppings' => $request->toppings,
+    ]);
 
-
-    $pizza->save();
-
-
-    return redirect('/')->with('msg', 'شكرا لطلبك  ');
+    if ($order)
+      return response()->json([
+        'status' => true,
+        'msg' => 'تم حفظ الطلب'
+      ]);
+    else
+      return response()->json([
+        'status' => false,
+        'msg' => 'هنالك خطأ في حفظ الطلب'
+      ]);
   }
+
+  // Without Ajax
+  // public function store()
+  // {
+
+  //   $pizza = new Pizza();
+  //   $pizza->name = request('name');
+  //   $pizza->type = request('type');
+  //   $pizza->base = request('base');
+  //   $pizza->toppings = request('toppings');
+
+
+  //   $pizza->save();
+
+
+  //   return redirect('/')->with('msg', 'شكرا لطلبك  ');
+  // }
 
   public function destroy($JHid)
   {
