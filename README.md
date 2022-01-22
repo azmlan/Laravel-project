@@ -1,5 +1,6 @@
 # RestaurantWebsite
-Restaurant App built with Laravel using some advance features
+Restaurant App built with Laravel using some advance features.
+You can find the create order code with ajax in this path : resources/views/pizzas/create.blade.php
 
 ### Features So far :
 - make new order with Ajax.
